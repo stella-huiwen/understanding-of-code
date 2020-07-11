@@ -1,0 +1,43 @@
+//康托展开公式：x=a[n]*(n-1)!+a[n-1]*(n-2)!+a[n-2]*(n-3)!+...+a[1]*0!
+#include <iostream>
+#include<algorithm>
+#include<cstdio>
+#include<string>
+using namespace std;
+int main()
+{
+    string a;
+    int ans=1,tmp;//因为计算a的位置是从0开始的，所以ans作为a的位置要加1
+    int fact[]={1,1,2,6,24,120,720,5040,40320,362880};//阶乘展开
+    cin>>a;
+    int len=a.length();
+    for(int i=0;i<len;i++)
+    {
+        tmp=0;//计算比a[i]小的个数
+        for(int j=i+1;j<len;j++)
+            if(a[j]<a[i])
+                tmp++;
+        ans+=tmp*fact[len-i-1];//fact是从0开始的，所以要多减一个1
+    }
+    printf("%d",ans);
+    return 0;
+}
+/*
+阶乘算法
+int fact[100];
+void jiecheng_(int n)
+{
+    fact[0]=fact[1]=1;
+    for(int i=2;i<=n;i++)
+        fact[i]=fact[i-1]*i;
+}
+int main()
+{
+    int n;
+    scanf("%d",&n);
+    jiecheng_(n);
+    for(int i=0;i<=n;i++)
+        printf("%d ",fact[i]);
+    return 0;
+}
+*/
