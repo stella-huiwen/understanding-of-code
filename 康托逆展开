@@ -1,0 +1,33 @@
+#include <iostream>
+#include<algorithm>
+#include<cstdio>
+#include<string>
+using namespace std;
+int main()
+{
+    int fact[]={1,1,2,6,24,120,720,5040,40320,362880};//阶乘
+    int a,j,n,t,ans[10]={0};//a:第a大的数，n：数字个数
+    int s[100000];//s为展开数
+    scanf("%d%d",&a,&n);
+    a--;
+    for(int i=0;i<n;i++)
+    {
+        t=a/fact[n-1-i];
+        for( j=1;j<=n;j++)
+        {
+            if(!ans[j])
+            {
+                if(t==0)
+                break;
+                --t;
+            }
+        }
+        s[i]=j;
+        ans[j]=1;
+        a=a%fact[n-1-i];
+    }
+    for(int i=0;i<n;i++)
+    printf("%d",s[i]);
+    return 0;
+}
+
