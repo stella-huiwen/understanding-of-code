@@ -1,14 +1,31 @@
 2个不同的整数a、b，被一个整数m相除时，得到相同的余数，那么我就可以称a、b同
  因为a、b同余所以当他们相减时，余数就抵消掉了，剩下的那部分就是能被m整除的。
  
- 
- 
 证明：
    q1=a/m+r,q2=b/m+r
    a=mq1+r,b=mq2+r
    a-b=m(q1-q2)
 ->q1-q2=(a-b)/m 
 即(a-b)/m得到一个整数，那么就称整数a与b对模m同余，记作：a≡b(mod m)
+
+
+两个数除以m得到相同的余数，求m的最大的数值
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+int a,b;
+scanf("%d %d",&a,&b);
+int ans=max(a,b)-min(a,b);
+for(int i=min(a,b);i>=1;i--)
+{
+if(ans%i==0)
+{
+  printf("%d",i);
+  return 0;
+  }
+  }
+  }
 
 
 性质：
