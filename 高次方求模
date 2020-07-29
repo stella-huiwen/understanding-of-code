@@ -1,0 +1,50 @@
+递归法：
+#include <iostream>
+#include<algorithm>
+#include<cstdio>
+#include<string>
+using namespace std;
+long long x,y,m;
+long long big_mod(int long x,long y,long m)
+{
+    if(y==0)return 1;
+    if(y==1)return x%m;
+    long long ans=big_mod(x,y/2,m);
+    ans=(ans*ans)%m;
+    if(y&1)//判断y是否是奇数，如果为奇数，则ans要再乘一个x
+        ans=ans*x%m;
+     return ans;
+}
+int main()
+{
+    scanf("%lld%lld%lld",&x,&y,&m);
+    printf("%lld\n",big_mod(x,y,m));
+    return 0;
+}
+
+递推法：
+#include <iostream>
+#include<algorithm>
+#include<cstdio>
+#include<string>
+using namespace std;
+long long x,y,m;
+int big_mod(long long x,long long y);
+int main()
+{
+    scanf("%lld %lld %lld",&x,&y,&m);
+    printf("%d",big_mod(x,y));
+    return 0;
+}
+int big_mod(long long x,long long y)
+{
+    long long ans=1;
+    while(y)
+    {
+        if(y&1)//
+            ans=ans*x%m;
+        x=x*x%m;
+        y>>=1;
+    }
+    return ans;
+}
