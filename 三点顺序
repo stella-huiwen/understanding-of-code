@@ -1,0 +1,31 @@
+#include <iostream>
+#include<algorithm>
+#include<cstdio>
+#include<math.h>
+#include<string>
+using namespace std;
+int main()
+{
+    int x1,y1,x2,y2,x3,y3;//a(x1,y1),b(x2,y2),c(x3,y3)
+    int abx,aby,acx,acy,sum;
+   while(~scanf("%d%d%d%d%d%d",&x1,&y1,&x2,&y2,&x3,&y3))
+   {
+       if((x1+y1+x2+y2+x3+y3)==0)//判断输入000000的情况
+            break;
+        abx=x2-x1;
+        aby=y2-y1;
+        acx=x3-x1;
+        acy=y3-y1;
+        sum=abx*acy-aby*acx;//利用矢量叉积定理，当sum>0,根据右手定则可得为逆时针，当sum<0,则为顺时针
+        if(sum>0)
+        printf("0\n");
+        else 
+        printf("1\n");
+   }
+   return 0;
+}
+/*
+AB*AC>0   => 逆时针
+AB*AC<0   => 顺时针
+AB*AC=0   => 三点共线
+*/
