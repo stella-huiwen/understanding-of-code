@@ -1,0 +1,19 @@
+#include <iostream>
+#include<algorithm>
+#include<cstdio>
+#include<math.h>
+#include<string>
+using namespace std;
+int main()
+{
+    double a,b,c;//三角形三条边边长
+    double ans,sum;//三角形周长一半,三角形面积
+    scanf("%lf%lf%lf",&a,&b,&c);
+    ans=(a+b+c)/2;
+    sum=sqrt(ans*(ans-a)*(ans-b)*(ans-c));
+    printf("%.2f",sum);
+    return 0;
+}
+
+
+
