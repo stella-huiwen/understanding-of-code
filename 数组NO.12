@@ -1,0 +1,110 @@
+05:计算鞍点
+查看提交统计提问
+总时间限制: 1000ms 内存限制: 65536kB
+描述
+给定一个5*5的矩阵，每行只有一个最大值，每列只有一个最小值，寻找这个矩阵的鞍点。
+鞍点指的是矩阵中的一个元素，它是所在行的最大值，并且是所在列的最小值。
+例如：在下面的例子中（第4行第1列的元素就是鞍点，值为8 ）。
+11 3 5 6 9
+12 4 7 8 10
+10 5 6 9 11
+8 6 4 7 2
+15 10 11 20 25
+
+输入
+输入包含一个5行5列的矩阵
+输出
+如果存在鞍点，输出鞍点所在的行、列及其值，如果不存在，输出"not found"
+样例输入
+11 3 5 6 9
+12 4 7 8 10
+10 5 6 9 11
+8  6 4 7 2
+15 10 11 20 25
+样例输出
+4 1 8
+
+
+代码：（法一）
+//找鞍点
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+int a[6][6],max_a[6]={0},min_a[6];
+for(int i = 1;i <= 5;i++)
+    for(int j = 1;j <= 5;j++)
+    {
+        scanf("%d", &a[i][j]); //输入数据
+        if(a[i][j] > max_a[i])
+            max_a[i] = a[i][j]; //max_a是找最大的
+    }
+for(int j = 1;j <= 5;j++)
+{
+    min_a[j] = a[1][j];
+    for(int i = 1;i <= 5;i++)
+        if(a[i][j] < min_a[j])
+            min_a[j] = a[i][j]; //min_a找最小
+}
+for(int i = 1;i <= 5;i++)
+    for(int j = 1;j <= 5;j++)
+    if(a[i][j] == max_a[i] && a[i][j] == min_a[j])
+    { //如果这个数是这一行的最大值且是这一列的最小值那么就输出它
+        printf("%d %d %d",i,j,a[i][j]);
+        return 0; //找到之后直接结束
+    }
+printf("not found"); //到这儿说明没找到，因为如果找到了就是直接输出然后结束了。
+return 0;
+}
+
+
+
+
+法二：
+//找鞍点
+#include <bits/stdc++.h>
+using namespace std;
+int main()
+{
+	int n=5;
+	int temp[n+5][n+5];
+	for(int i = 1;i <= n; i++)
+	{
+		for(int j = 1;j <= n; j++){
+			scanf("%d",&temp[i][j]);
+		}
+	}
+	
+	int ret = 0;//判断not found条件 
+	int x,y;//输出坐标 
+	for(int i = 1;i <= n;i++)
+	{	
+		int Max = 0;
+		int hang = 0;		
+		int lie = 0;
+		for(int j = 1;j <= n;j++){
+			if(temp[i][j] >= Max){
+				Max = temp[i][j];
+				hang = i;
+				lie = j;
+			}
+		}
+		for(int k = 1;k <= n;k++){
+			if(temp[k][lie] < temp[hang][lie]){
+				hang = k;
+				break;
+			}
+		}
+		if(i == hang){
+			ret = 1;
+			x = hang;
+			y = lie;
+			break;
+		} 
+	}
+	if(ret == 0)
+		printf("not found");
+	else
+		printf("%d %d %d",x,y,temp[x][y]);
+	
+	return 0;
+}
