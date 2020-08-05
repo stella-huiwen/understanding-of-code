@@ -1,0 +1,62 @@
+Anagrams问题
+
+资源限制
+时间限制：1.0s   内存限制：512.0MB
+问题描述
+　　Anagrams指的是具有如下特性的两个单词：在这两个单词当中，每一个英文字母（不区分大小写）所出现的次数都是相同的。例如，“Unclear”和“Nuclear”、“Rimon”和“MinOR”都是Anagrams。编写一个程序，输入两个单词，然后判断一下，这两个单词是否是Anagrams。每一个单词的长度不会超过80个字符，而且是大小写无关的。
+　　输入格式：输入有两行，分别为两个单词。
+　　输出格式：输出只有一个字母Y或N，分别表示Yes和No。
+　　输入输出样例
+样例输入
+Unclear
+Nuclear
+样例输出
+Y
+
+原理：题意为比较两个字符串每个字母出现的次数是否完全相同，
+先将字母全部转换为大写字母，然后记录每一个字母出现的次数，最后判断字母次数是否相等
+
+
+代码：
+//Anagrams问题
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string a,b;
+    int c[100]={0},d[100]={0},cout=0;//c记录a每个字符的个数，d记录b每个字符的个数
+    cin>>a>>b;
+    int lena,len;
+    int m,n;
+    lena=a.length();
+    len=b.length();
+    if(lena!=len)
+        printf("N");
+    else
+    {
+        for(int i=0;i<lena;i++)//将每个字母全部转换为大写字母，并用数组来计数
+        {
+            if(a[i]>='a'&&a[i]<='z')
+                a[i]-=32;
+                m=(int)a[i];
+            c[m]++;
+            if(b[i]>='a'&&b[i]<='z')
+                b[i]-=32;
+                n=(int)b[i];
+            d[n]++;
+        }
+        for(int i=65;i<91;i++)//判断每一个字母次数是否相等
+        {
+            if(c[i]!=0&&d[i]!=0)
+            {
+                if(c[i]==d[i]);
+                    cout+=c[i];
+            }
+        }
+        if(cout==lena)
+            printf("Y");
+        else 
+            printf("N");
+    }
+    return 0;
+}
