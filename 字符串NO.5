@@ -1,0 +1,42 @@
+字符串最大跨距
+总时间限制: 1000ms 内存限制: 65536kB
+描述
+有三个字符串S,S1,S2，其中，S长度不超过300，S1和S2的长度不超过10。想检测S1和S2是否同时在S中出现，且S1位于S2的左边，并在S中互不交叉（即，S1的右边界点在S2的左边界点的左侧）。计算满足上述条件的最大跨距（即，最大间隔距离：最右边的S2的起始点与最左边的S1的终止点之间的字符数目）。如果没有满足条件的S1，S2存在，则输出-1。
+
+例如，S = "abcd123ab888efghij45ef67kl", S1="ab", S2="ef"，其中，S1在S中出现了2次，S2也在S中出现了2次，最大跨距为：18。
+
+输入
+三个串：S, S1, S2，其间以逗号间隔（注意，S, S1, S2中均不含逗号和空格）；
+输出
+S1和S2在S最大跨距；若在S中没有满足条件的S1和S2，则输出-1。
+样例输入
+abcd123ab888efghij45ef67kl,ab,ef
+样例输出
+18
+
+
+
+思路：
+运用了string中的find和rfind函数，分别从头和尾来进行查找子串，
+find和rfind函数和char中strchr,strrchr非常相似
+
+代码：
+//字符串最大跨距
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string s,s1,s2;
+    int len1,len2,len;
+    getline(cin,s,',');//输入，注意逗号
+    getline(cin,s1,',');
+    getline(cin,s2);
+    len1=s.find(s1);//从头开始查找s中是否出现s1,若没有，则返回-1，若存在，则返回s1末尾字符的位置
+    len2=s.rfind(s2);//从尾开始查找s中是否出现s2，若没有，则返回-1，若存在，则返回s2第一个字符的位置
+    len=s1.length();
+    if(len1>len2||len1==-1||len2==-1)
+    cout<<-1;
+    else
+        cout<<len2-len1-len;//跨距=右边字符串的位置-左边字符串的位置-左边字符串的长度
+    return 0;
+}
