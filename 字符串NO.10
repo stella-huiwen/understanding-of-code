@@ -1,0 +1,39 @@
+判定字符串位置
+资源限制
+时间限制：1.0s   内存限制：512.0MB
+　　返回给定字符串s中元音字母的首次出现位置。英语元音字母只有‘a’、‘e’、‘i’、‘o’、‘u’五个。
+　　若字符串中没有元音字母，则返回0。
+　　只考虑小写的情况。
+样例输入
+and
+样例输出
+1
+
+
+代码：
+//判定字符串位置
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string a;
+    cin>>a;
+    int j=0;
+    int len=a.length();
+    for(int i=0;i<len;i++)
+    {
+        if(a[i]=='a'||a[i]=='e'||a[i]=='i'||a[i]=='o'||a[i]=='u')
+        {
+            j=1;
+            cout<<i+1;
+            break;
+        }
+    }
+    if(j==0)
+    cout<<0;
+    return 0;
+}
+    
+
+
+
