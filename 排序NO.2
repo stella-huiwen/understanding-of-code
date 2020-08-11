@@ -1,0 +1,83 @@
+单词排序
+总时间限制: 1000ms 内存限制: 65536kB
+描述
+输入一行单词序列，相邻单词之间由1个或多个空格间隔，请按照字典序输出这些单词，要求重复的单词只输出一次。（区分大小写）
+
+输入
+一行单词序列，最少1个单词，最多100个单词，每个单词长度不超过50，单词之间用至少1个空格间隔。数据不含除字母、空格外的其他字符。
+输出
+按字典序输出这些单词，重复的单词只输出一次。
+样例输入
+She  wants  to go to Peking University to study  Chinese
+样例输出
+Chinese
+Peking
+She
+University
+go
+study
+to
+wants
+
+
+
+思路：先输入数据，然后进行排序，最后输出，注意输出格式，同时用string定义字符串进行比较大小比较方便
+后来发现使用sort快排更简便
+
+代码：法一
+//单词排序
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string a[105],b;
+    int t=0;
+    while(cin>>a[t])//输入
+        t++;
+    for(int i=0;i<t-1;i++)//排序
+        for(int j=i+1;j<t;j++)
+        {
+            if(a[i]>a[j])//比较大小
+                {
+                    b=a[i];
+                    a[i]=a[j];
+                    a[j]=b;
+                }
+        }
+        cout<<a[0]<<endl;//输出
+    for(int i=1;i<t;i++)
+    {
+        if(a[i-1]!=a[i])
+            cout<<a[i]<<endl;
+    }
+    return 0;
+}
+
+
+
+法二：使用sort
+//单词排序sort法
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    string a[105],b;
+    int t=0;
+    while(cin>>a[t])//输入
+        t++;
+    sort(a,a+t);
+        cout<<a[0]<<endl;//输出
+    for(int i=1;i<t;i++)
+    {
+        if(a[i-1]!=a[i])
+            cout<<a[i]<<endl;
+    }
+    return 0;
+}
+
+
+
+
+
+
+
