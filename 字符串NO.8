@@ -1,0 +1,62 @@
+可爱即正义
+链接：https://ac.nowcoder.com/acm/problem/18984
+来源：牛客网
+
+题目描述 
+小可爱是个可爱的女孩子(nzdl)。
+众所周知，小可爱在物竞初赛时候有两道大题没有做出来，所以，可爱的小可爱(qwq)便沉浸在了毒瘤之中——无法接受在任何地方看到"suqingnianloveskirito"这个东西。然而，这时候从SD某处送来了一封安慰信(情书)，信的内容是一个26个小写拉丁字母组成的字符串s。这封信提前被wyxdrqc劫了下来(没错，就是这个劫)，他打开了这封信，结果发现了满篇的"suqingnianloveskirito"所以他想篡改这封信。
+由于他的能力有限，所以他只能把这个字符串的其中两个位置上的字符互换，而且只能操作一次。
+他现在想问你，通过他的操作能不能使"suqingnianloveskirito"不是这个字符串的子串。
+
+输入描述:
+一行一个字符串s
+输出描述:
+如果他能通过只交换其中的两个位置上的字符使"suqingnianloveskirito"不是交换后的字符串的子串，则在第一行输出一个Yes，之后一行输出两个数d1，d2，表示你的方案是把原字符串在位置d1和位置d2上的字符互换，字符串的第一个字符的位置是1。
+如果他不管交换那两个字符都不能满足条件，直接输出一行No。
+示例1
+输入
+复制
+suqingnianloveskiritosuqingnianloveskiritosuqingnianloveskiritothemostimportantthingneedsaidatleastthreetimes
+输出
+复制
+No
+示例2
+输入
+复制
+suqingnianloveskiritosomuch
+输出
+复制
+Yes
+1 2
+
+
+
+代码：
+#include <bits/stdc++.h>
+using namespace std; 
+const int N = 1e6+10;
+char s[N];
+int main()
+{
+    char *p = "suqingnianloveskirito";
+    int n = strlen(p);
+    cin>>s;
+    char *a=strstr(s,p);
+    char *b=NULL;
+    char *c=NULL;
+    if(a!=NULL)
+        b=strstr(a+n,p);
+    if(b!=NULL)
+        c=strstr(b+n,p);
+    if(c!=NULL)
+        printf("No");
+    else{
+        printf("Yes\n");
+        if(b!=NULL) 
+            printf("%d %d",a-s+1,b-s+2);
+        else if(a!=NULL)
+            printf("%d %d",a-s+1,a-s+2);
+        else printf("1 2");
+    }
+    return 0;
+}
