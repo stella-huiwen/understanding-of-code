@@ -1,0 +1,101 @@
+和为给定数
+描述
+给出若干个整数，询问其中是否有一对数的和等于给定的数。
+
+输入
+共三行：
+第一行是整数n(0 < n <= 100,000)，表示有n个整数。
+第二行是n个整数。整数的范围是在0到10^8之间。
+第三行是一个整数m（0 <= m <= 2^30)，表示需要得到的和。
+输出
+若存在和为m的数对，输出两个整数，小的在前，大的在后，中间用单个空格隔开。若有多个数对满足条件，选择数对中较小的数更小的。若找不到符合要求的数对，输出一行No。
+样例输入
+4
+2 5 1 4
+6
+样例输出
+1 5
+
+
+
+思路：
+先输入数据，然后升序排序，
+法一：
+分别从左右端点开始检测，即l=1,r=n,当a[l]+a[r]=m时输出，否则a[l]+a[r]>m,则r--,若a[l]+a[r]<m,则l++;直到二者相加等于m，
+否则，输出No
+
+法二：
+for循环从第一个元素开始检测，左边界为i+1,右边界为n,mid为左右边界的中心值，若a[i]+a[mid]=m,则直接输出，若a[i]+a[mid]>m,则r=mid-1;若a[i]+a[mid]<m,则l=mid+1;
+若没有找到，则输出No
+
+
+代码（法一）：
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n,l,r,flag=0;
+    long long m;
+    cin>>n;
+    int a[n+5];
+    for(int i=1;i<=n;i++)//输入
+        cin>>a[i];
+    cin>>m;
+    sort(a+1,a+n+1);//排序
+    l=1;r=n;//左右边界
+    while(l<r)
+    {
+        if(a[l]+a[r]==m)//若相等，则输出
+        {
+            cout<<a[l]<<' '<<a[r];
+            flag=1;
+            return 0;
+        }
+        if(a[l]+a[r]>m)//大于m，则右边界减一
+            r--;
+        else
+            l++;//小于m，则左边界加一
+    }
+    if(flag==0)//若不存在，则输出No
+    cout<<"No";
+    return 0;
+}
+
+
+
+代码（法二）：
+//和为给定数
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n,l,r,mid;
+    long long m;
+    cin>>n;
+    int a[n+5];
+    for(int i=1;i<=n;i++)//输入
+        cin>>a[i];
+    cin>>m;
+    sort(a+1,a+n+1);//升序排序
+    l=1;r=n;
+    for(int i=1;i<=n;i++)//从第一个元素开始找
+    {
+        l=i+1;//左界
+        r=n;//右界
+        while(l<=r)
+        {
+            mid = (l+r)/2;
+            if(a[i]+a[mid]==m)//如果此时中间的数和a【i】加起来正好是m直接输出并且return 0
+            {
+                cout<<a[i]<<" "<<a[mid];
+                return 0;
+            }
+            else if(a[mid]+a[i]>m) 
+                r=mid-1;//如果偏大就往左找
+            else 
+                l=mid+1;//否则往右边找
+        }
+    }
+    cout<<"No";
+    return 0;//到这时说明上面没找到符合条件的 输出no就可以了
+}
