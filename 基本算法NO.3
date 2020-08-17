@@ -1,0 +1,118 @@
+全排列
+描述
+给定一个由不同的小写字母组成的字符串，输出这个字符串的所有全排列。
+我们假设对于小写字母有'a' < 'b' < ... < 'y' < 'z'，而且给定的字符串中的字母已经按照从小到大的顺序排列。
+
+输入
+输入只有一行，是一个由不同的小写字母组成的字符串，已知字符串的长度在1到6之间。
+输出
+输出这个字符串的所有排列方式，每行一个排列。要求字母序比较小的排列在前面。字母序如下定义：
+
+已知S = s1s2...sk , T = t1t2...tk，则S < T 等价于，存在p (1 <= p <= k)，使得
+s1 = t1, s2 = t2, ..., sp - 1 = tp - 1, sp < tp成立。
+样例输入
+abc
+样例输出
+abc
+acb
+bac
+bca
+cab
+cba
+
+
+
+思路：
+回溯法：
+我们可以用搜索回溯算法，定义一个储存枚举出的字符串的数组(b)、已经被使用过的元素的数组（即可用的元素）（a）、
+正在拼接的字符串数组(c)。每进一次回溯，就把最初始的字符串从前至后循环，若找到可用的元素(b[i]=true)，
+就连接到字符串(c)的最后方。若字符串(c)的长度已经达到了初始字符串的长度，就把它储存在数组(a)中，当退出一次回溯后，
+就将之前使用过的元素重新设为可用，把字符串(c)的末尾元素删去。最后输出。
+非回溯法：
+使用next_permutation函数
+函数原型:
+#include<algorithm>
+bool next_permutation(iterator start,iterator end)//end为数组的长度
+例如：
+#include <iostream>  
+ #include <algorithm>  
+ using namespace std;  
+ int main()                                                    输出：
+ {                                                                   1 2 3
+     int num[3]={1,2,3};                                             1 3 2   
+     do                                                              2 1 3      
+     {                                                               2 3 1
+         cout<<num[0]<<" "<<num[1]<<" "<<num[2]<<endl;               3 1 2
+     }while(next_permutation(num,num+3));                            3 2 1
+     return 0;  
+ }
+ 
+ 若把num+3变为num+2，则输出
+ 1 2 3
+ 2 1 3
+ 并且该函数在使用前应对想要排列的数组进行升序或降序排列，否则只能找出该序列之后的全排列数
+ 
+ 
+ 
+ 代码（回溯法）
+ //全排列（回溯法）
+#include<bits/stdc++.h>
+using namespace std;
+char a[10],str[10];//str数组用于储存
+bool flag[10];//用于判断字符是否重复使用
+int len;//字符串长度
+void f(int n)//从第一给元素开始枚举
+{
+    if(n==len)//len为字符串的长度，当字符累积到字符串长度时，就可以输出了
+    {
+        for(int i=0;i<len;i++)//输出
+            cout<<str[i];
+        cout<<endl;
+    }
+    else
+    {
+        for(int i=0;i<len;i++)
+        {
+            if(!flag[i])//判断字符是否使用过
+            {
+                str[n]=a[i];//若没有使用过则赋值给str数组储存
+                flag[i]=true;//对使用过的字符进行标记
+                f(n+1);//递归
+                flag[i]=false;//把使用过的字符恢复为可用
+            }
+        }
+    }
+}
+int main()
+{
+    cin>>a;//输入
+    len=strlen(a);//获取字符串长度
+    f(0);
+    return 0;
+}
+
+
+
+代码（非回溯法）：
+//全排列(非回溯法)
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    char a[10];
+    cin>>a;
+    int len=strlen(a);
+    do{
+        for(int i=0;i<len;i++)
+            cout<<a[i];
+        cout<<endl;
+    }while(next_permutation(a,a+len));
+    return 0;
+}
+    
+
+
+
+ 
+ 
+
