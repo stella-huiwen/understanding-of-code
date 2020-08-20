@@ -1,0 +1,48 @@
+判断矩形是否包含点
+
+b             c
+      q
+a             d
+
+
+思路：
+只要判断点是否在上下两边和左右两边之间就行，判断一个点在是否在边的一边则可以利用叉乘的方向性进行计算，
+即判断
+(ab^aq)*(cd^cq)>=0
+(bc^bq)*(ad^aq)>=0
+
+
+代码：
+//判断矩形是否包含点
+#include<bits/stdc++.h>
+using namespace std;
+struct point//建立点结构体
+{
+    double x;
+    double y;//x:横坐标,y:纵坐标
+};
+//叉乘
+double cross(point n,point m,point t)
+{
+    return (m.x-n.x)*(t.y-n.x)-(t.x-n.x)*(m.y-n.y);
+}
+bool s(point a,point b,point c,point d,point q)
+{
+    if(cross(a,b,q)*cross(c,d,q)<0||cross(b,c,q)*cross(a,d,q)<0)
+    return false;
+    return true;
+}
+int main()
+{
+    struct point a,b,c,d,q;//a:左下角点，b:左上角点，c:右上角点，d:右下角点，p:目标点
+    cin>>a.x>>a.y;//输入
+    cin>>b.x>>b.y;
+    cin>>c.x>>c.y;
+    cin>>d.x>>d.y;
+    cin>>q.x>>q.y;
+    if(s(a,b,c,d,q))
+        cout<< "YES";//输出
+    else
+        cout<<"NO";
+    return 0;
+}
