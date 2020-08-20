@@ -1,0 +1,59 @@
+判断线段相交
+一般用叉乘来判断
+分为两步：
+1.快速排斥实验
+2.跨立实验
+
+
+快速排斥实验：
+我们首先判断两条线段在 x 以及 y 坐标的投影是否有重合。 
+也就是判断下一个线段中 x 较大的端点是否小于另一个线段中 x 较小的段点，若是，则说明两个线段必然没有交点，同理判断下 y。
+即
+max(c.x,d.x)<min(a.x,b.x)
+max(c.y,d.y)<min(a.y,b.y)
+max(a.x,b.x)<min(c.x,d.x)
+max(a.y,b.y)<min(c.y,d.y)
+以上任一成立，则两线段不相交
+
+跨立实验（叉乘判断）：
+判断线段相交，即分别判断a,b在cd两侧,同时判断c,d在ab两侧
+即判断a,b分别与cd叉乘得到值的乘积小于零，判断c,d分别与ab叉乘得到的值的乘积小于零，则说明相交
+
+
+代码：
+//判断线段相交
+#include<bits/stdc++.h>
+using namespace std;
+struct point//建立点的结构体
+{
+    double x,y;
+};
+//跨界实验，叉乘判断点在线段的位置
+double cross(point n,point m,point t)
+{
+    return (m.x-n.x)*(t.y-n.x)-(t.x-n.x)*(m.y-n.y);
+}
+bool s(point a,point b,point c,point d)
+{
+    //快速排斥实验，判断线段ab,cd是否相交
+    if(max(c.x,d.x)<min(a.x,b.x)||max(c.y,d.y)<min(a.y,b.y)||max(a.x,b.x)<min(c.x,d.x)||max(a.y,b.y)<min(c.y,d.y))
+    return false;
+    if(cross(a,b,c)*cross(a,b,d)>=0||cross(c,d,a)*cross(c,d,b)>=0)
+    return false;
+    return true;
+}
+int main()
+{
+    struct point a,b,c,d;
+    cin>>a.x>>a.y;//输入
+    cin>>b.x>>b.y;
+    cin>>c.x>>c.y;
+    cin>>d.x>>d.y;
+    if(s(a,b,c,d))//输出
+        cout<<"YES"<<endl;
+    else
+        cout<<"NO"<<endl;
+    return 0;
+}
+
+
