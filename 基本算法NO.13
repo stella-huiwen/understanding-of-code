@@ -1,0 +1,104 @@
+链接：https://ac.nowcoder.com/acm/contest/5667/F
+来源：牛客网
+Fake Maxpooling
+牛客暑假训练营第二场F题
+题目描述 
+Given a matrix of size n\times mn×m and an integer {k}k, where A i,j=lcm(i,j), the least common multiple of {i}i and {j}j. You should determine the sum of the maximums among all k\times kk×k submatrices.
+输入描述:
+Only one line containing three integers n,m,k (1≤n,m≤5000,1≤k≤min{n,m}).
+输出描述:
+Only one line containing one integer, denoting the answer.
+示例1
+输入
+复制
+3 4 2
+输出
+复制
+38
+说明
+The given matrix is:
+1 2 3 4
+2 2 6 4
+3 6 3 12
+The maximums among all 2×2 submatrices are 2,6,6,6,6,12 respectively, and their sum is 38.
+
+大致题意：
+输入三个整数 n,m,k,构建一个n×m的矩阵A, A[m] [n]所存的数为m，n的最小公倍数，求矩阵A中所有k×k的子矩阵中的最大值的和。
+大致思路：
+先根据每项的行和列算出各项的值。
+求最小公倍数
+辗转相除法：
+int lcm(int a,int b)
+{
+  int mul=a*b;
+  while(b)
+  {
+	 int tmp=a%b;
+     a=b;
+     b=tmp;
+  }
+  return mul/a;
+}
+
+gcd函数：
+int lcm(int a,int b)
+{
+  return a*b/__gcd(a,b);
+}
+
+然后根据k值分为两种情况，
+当k=1时，和为所有项相加。
+if(k==1)
+{
+   sum+=a[i][j];
+   flag=1;  
+}
+
+当k>1时，每一项和其前一项和其上一行所在项进行比较，将最大的赋值给该项，即此时，每一项的值都为其前一项和其上一行所在项的最大值。
+当行和列满足K时，此时的每行每列的项都为k×k子矩阵中的最大值，最后每一项相加即可得到和。
+for(int i=1;i<=n;i++)
+      for(int j=1;j<=m;j++)
+      {
+        a[i][j]=max(max(a[i-1][j],a[i][j-1]),a[i][j]);//每一项为前一项，上一项与自己本身中的最大值
+        if(i>=k&&j>=k)//k大于1时，求k*k子矩阵中最大元素的总和
+        	sum+=a[i][j];
+      }
+
+代码：
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+int a[5005][5005];
+int lcm(int a,int b)
+{
+  return a*b/__gcd(a,b);//注意__gcd()函数求最大公约数，有两个下划线
+}
+int main()
+{
+  int n,m,k;
+  int flag=0;//判断
+  ll sum=0;//记录总和
+  cin>>n>>m>>k;//输入
+  for(int i=1;i<=n;i++)
+    for(int j=1;j<=m;j++)
+    {
+      a[i][j]=lcm(i,j);
+      if(k==1)//为1*1的子矩阵时，全部元素总和相加
+      {
+        sum+=a[i][j];
+        flag=1;
+      }
+    }
+  if(flag==0)
+  {
+    for(int i=1;i<=n;i++)
+      for(int j=1;j<=m;j++)
+      {
+        a[i][j]=max(max(a[i-1][j],a[i][j-1]),a[i][j]);//每一项为前一项，上一项与自己本身中的最大值
+        if(i>=k&&j>=k)//k大于1时，求k*k子矩阵中最大元素的总和
+        	sum+=a[i][j];
+      }
+  }
+  cout<<sum<<endl;//输出
+  return 0;
+}
